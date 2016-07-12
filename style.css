@@ -2,11 +2,56 @@
     position: absolute;
     width: 100px;
     height: 50px;
-    overflow-y: auto;
+    overflow-y: hidden;
     word-wrap: break-word;
+    resize: both;
+}
+
+#mainheader {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: 'Megrim', cursive;
+    font-weight: 100;
+    font-size: 4.5em;
+}
+
+.outer {
+    box-shadow: 0 8px 23px -15px rgba(0,0,0,0.2);
+}
+.headercontainer {
+    box-shadow: 0 8px 23px -15px rgba(0,0,0,0.75);
+}
+
+.dragWrapper {
+    max-height: 400px;
+    overflow: auto;
 }
 
 #frm1 {
     width: 220px;
     overflow-y:auto;
+    display:block;
 }
+
+.dropbtn {
+    float: right;
+    border: none;
+    background-color: transparent;
+}
+
+#myDropdown {
+    float: right;
+    clear: left;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-content a {
+    display: block;
+}
+
+.show {display:block;}

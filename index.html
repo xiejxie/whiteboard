@@ -2,10 +2,38 @@
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100|Megrim" rel="stylesheet">
+
+    <div class="dropdown">
+        <button class="dropbtn" onclick="showMenu()">settings</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+    </div>
+
+    <h1 id= "mainheader">on<span class = "outer">l<span class="headercontainer">ine whitebo</span>a</span>rd</h1>
+</head>
+
 </head>
 <body ondrop="drop(event)" ondragover="drag_over(event)">
 
 <script>
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
     function addNote(title, body) {
         if (body != "") {
             if (title == ""){title = "Untitled";}
@@ -15,6 +43,8 @@
             note.setAttribute("draggable", "true");
             note.setAttribute("ondragstart", "drag_start(event)");
             fillNote(note, title, body);
+            var element = document.getElementById("div1");
+            element.appendChild(note);
         }
         else {
             {alert("DUN DUN DUN")}
@@ -39,11 +69,15 @@
         var str = (parseInt(style.getPropertyValue("left")) - event.clientX)
                 + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY) + ',' + event.target.id;
         event.dataTransfer.setData("div", str);
+        var offset = event.dataTransfer.getData("div").split(',');
+        var dm = document.getElementById(offset[2]);
+        dm.overflowY = "hidden";
     }
 
     function drop(event) {
         var offset = event.dataTransfer.getData("div").split(',');
         var dm = document.getElementById(offset[2]);
+        //dm.overflowY = "auto";
         dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
         dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
         event.preventDefault();
@@ -51,16 +85,16 @@
     }
 
     function fillNote(note, title, body) {
-        var title = document.createTextNode(title);
-        var body = document.createTextNode(body);
+        var title2 = document.createTextNode(title);
+        var body2 = document.createTextNode(body);
+        var titleBox = document.createElement("H1");
+        titleBox.appendChild(title2);
         var exit = document.createElement("BUTTON");
         exit.id = "exitButton";
 
-        note.appendChild(title);
-        note.appendChild(body);
-        var element = document.getElementById("div1");
         note.appendChild(exit);
-        element.appendChild(note);
+        note.appendChild(titleBox);
+        note.appendChild(body2);
 
         exit.onclick = function() {deleteNote(note, exit);};
     }
@@ -69,6 +103,10 @@
         var notebook = document.getElementById("div1");
         notebook.removeChild(note);
         notebook.removeChild(exit);
+    }
+
+    function showMenu() {
+        document.getElementById("myDropdown").classList.toggle("show");
     }
 
 </script>
