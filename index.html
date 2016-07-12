@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ondrop="drop(event)" ondragover="drag_over(event)">
+
+<script>
+    function addNote(title, body) {
+        if (body != "") {
+            if (title == ""){title = "Untitled";}
+            var note = document.createElement("div");
+            note.className = "note";
+            set_id(note);
+            note.setAttribute("draggable", "true");
+            note.setAttribute("ondragstart", "drag_start(event)");
+            fillNote(note, title, body);
+        }
+        else {
+            {alert("DUN DUN DUN")}
+        }
+    }
+
+    function set_id(note) {
+        if (typeof set_id.unique == 'undefined') {
+            set_id.unique = 0;
+        }
+
+        note.id = parseInt(++set_id.unique) + "note";
+    }
+
+    function drag_over(event) {
+        event.preventDefault();
+        return false;
+    }
+
+    function drag_start(event) {
+        var style = window.getComputedStyle(event.target, null);
+        var str = (parseInt(style.getPropertyValue("left")) - event.clientX)
+                + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY) + ',' + event.target.id;
+        event.dataTransfer.setData("div", str);
+    }
+
+    function drop(event) {
+        var offset = event.dataTransfer.getData("div").split(',');
+        var dm = document.getElementById(offset[2]);
+        dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
+        dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
+        event.preventDefault();
+        return false;
+    }
+
+    function fillNote(note, title, body) {
+        var title = document.createTextNode(title);
+        var body = document.createTextNode(body);
+        var exit = document.createElement("BUTTON");
+        exit.id = "exitButton";
+
+        note.appendChild(title);
+        note.appendChild(body);
+        var element = document.getElementById("div1");
+        note.appendChild(exit);
+        element.appendChild(note);
+
+        exit.onclick = function() {deleteNote(note, exit);};
+    }
+
+    function deleteNote(note, exit) {
+        var notebook = document.getElementById("div1");
+        notebook.removeChild(note);
+        notebook.removeChild(exit);
+    }
+
+</script>
+
+<div id="div1">
+    <p id="p1">This is a paragraph.</p>
+    <p id="p2">This is another paragraph.</p>
+</div>
+
+<form id="frm1">
+    <input type="text" name="title" maxlength=2000><br>
+    <input type="text" name="body" maxlength=2000><br><br>
+    <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+.note {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+#frm1 {
+    width: 220px;
+    overflow-y:auto;
+}
