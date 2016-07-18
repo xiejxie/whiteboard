@@ -9,41 +9,47 @@
 }
 
 body {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
 }
 
-#wrapper {
-    margin-left:auto;
-    margin-right:auto;
-    width:960px;
+.canvaswrapper {
+    width: 100%;
+    margin: auto;
 }
 
 #maincanvas {
-    margin: auto;
-    width: 1000px;
+    margin: 0 auto;
     border: 1px solid #000;
     overflow: hidden;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50px;
+    /*top: 0;*/
 }
 
 .notearea {
-    float-wrap: none;
-    margin: auto;
+    float: right;
     width: 200px;
     border: 1px solid #000;
     -webkit-user-select: none;
     position: relative;
+    right: 0;
+}
+
+.headerwrapper {
+    margin: auto;
+    width: 500px;
 }
 
 #mainheader {
+    width: 100%;
     position: fixed;
-    margin: 0;
+    height: 100px;
+    letter-spacing: 3px;
+    padding-top: 25px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 100;
-    font-size: 3.5em;
+    font-size: 2.5em;
 }
 
 .outer {
@@ -68,11 +74,6 @@ body {
     float: right;
     border: none;
     background-color: transparent;
-}
-
-#myDropdown {
-    float: right;
-    clear: left;
 }
 
 .dropdown-content {

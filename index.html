@@ -4,34 +4,34 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:300" rel="stylesheet">
 
-    <div class="dropdown">
-        <button class="dropbtn" onclick="showMenu()">settings</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-    </div>
-
-    <h1 id= "mainheader"><span style = "font-weight: 700; color:#90BDFF">O</span>N<span class = "outer">L<span class="headercontainer">INE WHITEBO</span>A</span>RD</h1>
+    <h1 id= "mainheader"><div class="headerwrapper">
+        <span style = "font-weight: 100; color:#90BDFF">O</span>N<span class = "outer">L<span class="headercontainer">INE WHITEBO</span>A</span>RD
+    </div></h1>
 </head>
 
-<body ondrop="drop(event)" ondragover="drag_over(event)" style = "overflow: hidden" onresize="resizeCanvas()">
-    <div id="wrapper">
-        <canvas id="maincanvas" width=1366 height=799>
-        </canvas>
-        <div class = "notearea" id = "noteblock">
-            <div id="div1">
-                <p id="p1" style="user-select: none;">This is a paragraph.</p>
-                <p id="p2" style="user-select: none;">This is another paragraph.</p>
-            </div>
+<body ondrop="drop(event)" ondragover="drag_over(event)" style = "overflow: hidden">
+<canvas id="maincanvas">
+</canvas>
+<div class = "notearea" id = "noteblock">
+    <div id="div1">
+        <p id="p1" style="user-select: none;">This is a paragraph.</p>
+        <p id="p2" style="user-select: none;">This is another paragraph.</p>
+    </div>
 
-            <form id="frm1">
-                <input type="text" name="title" maxlength=2000><br>
-                <input type="text" name="body" maxlength=2000><br><br>
-                <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
-            </form>
-        </div>
+    <form id="frm1">
+        <input type="text" name="title" maxlength=2000><br>
+        <input type="text" name="body" maxlength=2000><br><br>
+        <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
+    </form>
+</div>
+<div class="dropdown">
+    <button class="dropbtn" onclick="showMenu()">settings</button>
+    <div id="myDropdown" class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+    </div>
+</div>
     <script>
         var canvas, ctx, flag = false,
                 prevX = 0,
@@ -75,8 +75,8 @@
 
         function findxy(res, e) {
             if (res == 'down') {
-                prevX = e.clientX;
-                prevY = e.clientY;
+                prevX = e.clientX-50;
+                prevY = e.clientY-100;
                 flag = true;
             }
             if (res == 'up' || res == "out") {
@@ -85,12 +85,14 @@
             if (res == 'move') {
                 if (flag == true) {
                     canvas.style.cursor = "pointer";
+                    currX = e.clientX-50;
+                    currY = e.clientY-100;
                     ctx.moveTo(prevX,prevY);
-                    ctx.lineTo(e.clientX,e.clientY);
+                    ctx.lineTo(currX, currY);
                     ctx.stroke();
-                    ctx.fillRect(e.clientX, e.clientY, 4, 4);
-                    prevX = e.clientX;
-                    prevY = e.clientY;
+                    ctx.fillRect(currX, currY, 1, 1);
+                    prevX = currX;
+                    prevY = currY;
                 }
             }
         }
@@ -183,6 +185,5 @@
         }
 
     </script>
-    </div>
 </body>
 </html>
