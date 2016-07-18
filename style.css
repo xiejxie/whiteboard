@@ -1,5 +1,6 @@
 .note {
     position: absolute;
+    margin: auto;
     width: 100px;
     height: 50px;
     overflow-y: hidden;
@@ -7,14 +8,42 @@
     resize: both;
 }
 
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    width:960px;
+}
+
+#maincanvas {
+    margin: auto;
+    width: 1000px;
+    border: 1px solid #000;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.notearea {
+    float-wrap: none;
+    margin: auto;
+    width: 200px;
+    border: 1px solid #000;
+    -webkit-user-select: none;
+    position: relative;
+}
+
 #mainheader {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
     margin: 0;
-    font-family: 'Megrim', cursive;
+    font-family: 'Quicksand', sans-serif;
     font-weight: 100;
-    font-size: 4.5em;
+    font-size: 3.5em;
 }
 
 .outer {

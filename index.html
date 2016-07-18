@@ -2,7 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100|Megrim" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:300" rel="stylesheet">
 
     <div class="dropdown">
         <button class="dropbtn" onclick="showMenu()">settings</button>
@@ -13,114 +13,176 @@
         </div>
     </div>
 
-    <h1 id= "mainheader">on<span class = "outer">l<span class="headercontainer">ine whitebo</span>a</span>rd</h1>
+    <h1 id= "mainheader"><span style = "font-weight: 700; color:#90BDFF">O</span>N<span class = "outer">L<span class="headercontainer">INE WHITEBO</span>A</span>RD</h1>
 </head>
 
-</head>
-<body ondrop="drop(event)" ondragover="drag_over(event)">
+<body ondrop="drop(event)" ondragover="drag_over(event)" style = "overflow: hidden" onresize="resizeCanvas()">
+    <div id="wrapper">
+        <canvas id="maincanvas" width=1366 height=799>
+        </canvas>
+        <div class = "notearea" id = "noteblock">
+            <div id="div1">
+                <p id="p1" style="user-select: none;">This is a paragraph.</p>
+                <p id="p2" style="user-select: none;">This is another paragraph.</p>
+            </div>
 
-<script>
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
+            <form id="frm1">
+                <input type="text" name="title" maxlength=2000><br>
+                <input type="text" name="body" maxlength=2000><br><br>
+                <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
+            </form>
+        </div>
+    <script>
+        var canvas, ctx, flag = false,
+                prevX = 0,
+                currX = 0,
+                prevY = 0,
+                currY = 0,
+                dot_flag = false;
 
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
+        var x = "black",
+                y = 2;
+
+        window.onload = init();
+
+        function resizeCanvas() {
+            var height = document.getElementById("mainheader").offsetHeight;
+            canvas = document.getElementById('maincanvas');
+            canvas.style.marginTop = height+"px";
+        }
+
+        function init() {
+            var height = document.getElementById("mainheader").offsetHeight;
+            canvas = document.getElementById('maincanvas');
+            canvas.style.marginTop = height+"px";
+            canvas.setAttribute("width", (screen.availWidth-100).toString());
+            canvas.setAttribute("height", (screen.availHeight-100).toString());
+            ctx = canvas.getContext("2d");
+
+            canvas.addEventListener("mousemove", function (e) {
+                findxy('move', e)
+            }, false);
+            canvas.addEventListener("mousedown", function (e) {
+                findxy('down', e)
+            }, false);
+            canvas.addEventListener("mouseup", function (e) {
+                findxy('up', e)
+            }, false);
+            canvas.addEventListener("mouseout", function (e) {
+                findxy('out', e)
+            }, false);
+        }
+
+        function findxy(res, e) {
+            if (res == 'down') {
+                prevX = e.clientX;
+                prevY = e.clientY;
+                flag = true;
+            }
+            if (res == 'up' || res == "out") {
+                flag = false;
+            }
+            if (res == 'move') {
+                if (flag == true) {
+                    canvas.style.cursor = "pointer";
+                    ctx.moveTo(prevX,prevY);
+                    ctx.lineTo(e.clientX,e.clientY);
+                    ctx.stroke();
+                    ctx.fillRect(e.clientX, e.clientY, 4, 4);
+                    prevX = e.clientX;
+                    prevY = e.clientY;
                 }
             }
         }
-    }
 
-    function addNote(title, body) {
-        if (body != "") {
-            if (title == ""){title = "Untitled";}
-            var note = document.createElement("div");
-            note.className = "note";
-            set_id(note);
-            note.setAttribute("draggable", "true");
-            note.setAttribute("ondragstart", "drag_start(event)");
-            fillNote(note, title, body);
-            var element = document.getElementById("div1");
-            element.appendChild(note);
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        };
+
+        function addNote(title, body) {
+            if (body != "") {
+                if (title == ""){title = "Untitled";}
+                var note = document.createElement("div");
+                note.className = "note";
+                set_id(note);
+                note.setAttribute("draggable", "true");
+                note.setAttribute("ondragstart", "drag_start(event)");
+                fillNote(note, title, body);
+                document.body.appendChild(note);
+            }
+            else {
+                {alert("DUN DUN DUN")}
+            }
         }
-        else {
-            {alert("DUN DUN DUN")}
+
+        function set_id(note) {
+            if (typeof set_id.unique == 'undefined') {
+                set_id.unique = 0;
+            }
+
+            note.id = parseInt(++set_id.unique) + "note";
         }
-    }
 
-    function set_id(note) {
-        if (typeof set_id.unique == 'undefined') {
-            set_id.unique = 0;
+        function drag_over(event) {
+            event.preventDefault();
+            return false;
         }
 
-        note.id = parseInt(++set_id.unique) + "note";
-    }
+        function drag_start(event) {
+            var style = window.getComputedStyle(event.target, null);
+            var str = (parseInt(style.getPropertyValue("left")) - event.clientX)
+                    + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY) + ',' + event.target.id;
+            event.dataTransfer.setData("div", str);
+            var offset = event.dataTransfer.getData("div").split(',');
+            var dm = document.getElementById(offset[2]);
+            dm.overflowY = "hidden";
+        }
 
-    function drag_over(event) {
-        event.preventDefault();
-        return false;
-    }
+        function drop(event) {
+            var offset = event.dataTransfer.getData("div").split(',');
+            var dm = document.getElementById(offset[2]);
+            //dm.overflowY = "auto";
+            dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
+            dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
+            event.preventDefault();
+            return false;
+        }
 
-    function drag_start(event) {
-        var style = window.getComputedStyle(event.target, null);
-        var str = (parseInt(style.getPropertyValue("left")) - event.clientX)
-                + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY) + ',' + event.target.id;
-        event.dataTransfer.setData("div", str);
-        var offset = event.dataTransfer.getData("div").split(',');
-        var dm = document.getElementById(offset[2]);
-        dm.overflowY = "hidden";
-    }
+        function fillNote(note, title, body) {
+            var title2 = document.createTextNode(title);
+            var body2 = document.createTextNode(body);
+            var titleBox = document.createElement("H1");
+            titleBox.appendChild(title2);
+            var exit = document.createElement("BUTTON");
+            exit.id = "exitButton";
 
-    function drop(event) {
-        var offset = event.dataTransfer.getData("div").split(',');
-        var dm = document.getElementById(offset[2]);
-        //dm.overflowY = "auto";
-        dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
-        dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
-        event.preventDefault();
-        return false;
-    }
+            note.appendChild(exit);
+            note.appendChild(titleBox);
+            note.appendChild(body2);
 
-    function fillNote(note, title, body) {
-        var title2 = document.createTextNode(title);
-        var body2 = document.createTextNode(body);
-        var titleBox = document.createElement("H1");
-        titleBox.appendChild(title2);
-        var exit = document.createElement("BUTTON");
-        exit.id = "exitButton";
+            exit.onclick = function() {deleteNote(note, exit);};
+        }
 
-        note.appendChild(exit);
-        note.appendChild(titleBox);
-        note.appendChild(body2);
+        function deleteNote(note, exit) {
+            document.body.removeChild(note);
+        }
 
-        exit.onclick = function() {deleteNote(note, exit);};
-    }
+        function showMenu() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
 
-    function deleteNote(note, exit) {
-        var notebook = document.getElementById("div1");
-        notebook.removeChild(note);
-        notebook.removeChild(exit);
-    }
-
-    function showMenu() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-</script>
-
-<div id="div1">
-    <p id="p1">This is a paragraph.</p>
-    <p id="p2">This is another paragraph.</p>
-</div>
-
-<form id="frm1">
-    <input type="text" name="title" maxlength=2000><br>
-    <input type="text" name="body" maxlength=2000><br><br>
-    <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
-</form>
-
+    </script>
+    </div>
 </body>
 </html>
