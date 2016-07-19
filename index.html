@@ -3,35 +3,39 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500" rel="stylesheet">
 
-    <h1 id= "mainheader"><div class="headerwrapper">
-        <span style = "font-weight: 100; color:#90BDFF">O</span>N<span class = "outer">L<span class="headercontainer">INE WHITEBO</span>A</span>RD
+    <h1 id= "mainheader"><div class="headerwrapper" >
+        <span style = "font-weight: 100; color:darkgray; padding-bottom: 5px">ON</span><span class = "outer" style = "padding-bottom: 5px;">L<span class="headercontainer" style = "padding-bottom: 5px;">INE WHITEBO</span>A</span>RD
     </div></h1>
 </head>
 
 <body ondrop="drop(event)" ondragover="drag_over(event)" style = "overflow: hidden">
-<canvas id="maincanvas">
-</canvas>
-<div class = "notearea" id = "noteblock">
-    <div id="div1">
-        <p id="p1" style="user-select: none;">This is a paragraph.</p>
-        <p id="p2" style="user-select: none;">This is another paragraph.</p>
+    <div class = "buttonswrapper">
     </div>
+    <canvas id="maincanvas">
+    </canvas>
+    <div class = "menuwrapper">
+        <div class="notewrapper" onmouseleave="hide('notearea')">
+            <button class="dropbtn" id="notedrop" onmouseenter="showMenu('noteblock')">TOOLS</button>
+            <div class = "notearea" id="noteblock">
+                <form id="frm1">
+                    <input class="inputtext" type="text" name="title" maxlength=2000><br>
+                    <textarea class="inputtextarea" name="body" maxlength=2000></textarea><br>
+                    <input type="button" class="secondtype" onclick="addNote(frm1.title.value, frm1.body.value)" value="SUBMIT">
+                </form>
+            </div>
+        </div>
 
-    <form id="frm1">
-        <input type="text" name="title" maxlength=2000><br>
-        <input type="text" name="body" maxlength=2000><br><br>
-        <input type="button" onclick="addNote(frm1.title.value, frm1.body.value)" value="Submit">
-    </form>
-</div>
-<div class="dropdown">
-    <button class="dropbtn" onclick="showMenu()">settings</button>
-    <div id="myDropdown" class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <div class="dropdown" onmouseleave="hide('dropdown-content')">
+            <button class="dropbtn" id="drop" onmouseenter="showMenu('myDropdown')">SETTINGS</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
     </div>
-</div>
     <script>
         var canvas, ctx, flag = false,
                 prevX = 0,
@@ -97,20 +101,16 @@
             }
         }
 
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
+        function hide(className) {
+            var dropdowns = document.getElementsByClassName(className);
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
                 }
             }
-        };
+        }
 
         function addNote(title, body) {
             if (body != "") {
@@ -180,8 +180,8 @@
             document.body.removeChild(note);
         }
 
-        function showMenu() {
-            document.getElementById("myDropdown").classList.toggle("show");
+        function showMenu(id) {
+            document.getElementById(id).classList.toggle("show");
         }
 
     </script>

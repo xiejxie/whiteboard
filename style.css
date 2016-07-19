@@ -1,8 +1,9 @@
-.note {
+.note{
+    z-index: 3;
     position: absolute;
     margin: auto;
-    width: 100px;
-    height: 50px;
+    width: 120px;
+    height: 200px;
     overflow-y: hidden;
     word-wrap: break-word;
     resize: both;
@@ -10,15 +11,17 @@
 
 body {
     padding: 0;
-    margin: 0;
+    margin-top: 10px;
 }
 
 .canvaswrapper {
+    -webkit-user-select: none;
     width: 100%;
     margin: auto;
 }
 
 #maincanvas {
+    z-index:1;
     margin: 0 auto;
     border: 1px solid #000;
     overflow: hidden;
@@ -27,13 +30,56 @@ body {
     /*top: 0;*/
 }
 
-.notearea {
-    float: right;
-    width: 200px;
-    border: 1px solid #000;
+.notewrapper {
+    float: left;
+    width: 120px;
     -webkit-user-select: none;
+    overflow: hidden;
     position: relative;
-    right: 0;
+}
+
+.notearea {
+    background-color: white;
+    margin: auto;
+    z-index: 3;
+    position:relative;
+    display: none;
+}
+
+.inputtext {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: solid 1px darkgray;
+    background-color: transparent;
+    font-size: small;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    display: block;
+    margin: auto;
+    width: 100px;
+}
+
+.inputtext:focus {
+    outline: none;
+}
+
+.inputtextarea {
+    display: block;
+    margin: auto;
+    width: 100px;
+    height: 50px;
+    resize: none;
+}
+
+.secondtype {
+    font-size: small;
+    display: block;
+    margin: auto;
+    background-color: transparent;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    color: slategrey;
 }
 
 .headerwrapper {
@@ -42,20 +88,23 @@ body {
 }
 
 #mainheader {
+    -webkit-user-select: none;
     width: 100%;
     position: fixed;
-    height: 100px;
+    height: 80px;
     letter-spacing: 3px;
     padding-top: 25px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 100;
     font-size: 2.5em;
+    z-index: 1;
 }
 
 .outer {
     box-shadow: 0 8px 23px -15px rgba(0,0,0,0.2);
 }
 .headercontainer {
+    -webkit-user-select: none;
     box-shadow: 0 8px 23px -15px rgba(0,0,0,0.75);
 }
 
@@ -65,18 +114,44 @@ body {
 }
 
 #frm1 {
-    width: 220px;
+    padding-top: 20px;
+    width: 120px;
     overflow-y:auto;
     display:block;
 }
 
+.buttonswrapper {
+    -webkit-user-select: none;
+}
+
 .dropbtn {
-    float: right;
-    border: none;
     background-color: transparent;
+    width: 120px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: darkgray;
+    border: none;
+}
+
+.notewrapper:hover .dropbtn  {
+    color: lightskyblue;
+    border-bottom: solid 4px lightskyblue;
+}
+
+.dropdown:hover .dropbtn  {
+    color: lightpink;
+    border-bottom: solid 4px lightpink;
+}
+
+.dropdown {
+    float: left;
+    width: 120px;
 }
 
 .dropdown-content {
+    z-index: 3;
+    position: relative;
     display: none;
 }
 
@@ -84,4 +159,10 @@ body {
     display: block;
 }
 
-.show {display:block;}
+.show {
+    display: block;
+}
+
+.menuwrapper {
+    width:420px;
+}
