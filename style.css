@@ -10,8 +10,11 @@
 }
 
 body {
+    width: auto;
+    background-color: #f4eee3;
     padding: 0;
     margin-top: 10px;
+    margin-left: 0;
 }
 
 .canvaswrapper {
@@ -21,27 +24,27 @@ body {
 }
 
 #maincanvas {
+    margin-top: 25px;
     z-index:1;
-    margin: 0 auto;
-    border: 1px solid #000;
     overflow: hidden;
     position: absolute;
-    left: 50px;
+    background-color: white;
     /*top: 0;*/
 }
 
 .notewrapper {
+    z-index: 2;
+    text-align: center;
     float: left;
-    width: 120px;
+    width: 128px;
     -webkit-user-select: none;
-    overflow: hidden;
+    overflow: auto;
     position: relative;
 }
 
 .notearea {
-    background-color: white;
+    background-color: transparent;
     margin: auto;
-    z-index: 3;
     position:relative;
     display: none;
 }
@@ -82,18 +85,14 @@ body {
     color: slategrey;
 }
 
-.headerwrapper {
-    margin: auto;
-    width: 500px;
-}
-
 #mainheader {
+    background-image: url("res/Header.png");
+    margin: auto;
+    text-align: center;
     -webkit-user-select: none;
-    width: 100%;
-    position: fixed;
+    width: 900px;
     height: 80px;
     letter-spacing: 3px;
-    padding-top: 25px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 100;
     font-size: 2.5em;
@@ -125,23 +124,26 @@ body {
 }
 
 .dropbtn {
+    z-index: 2;
+    position: relative;
     background-color: transparent;
-    width: 120px;
+    width: 100px;
+    margin: 0 auto;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     letter-spacing: 2px;
-    color: darkgray;
+    color: #1a1a1a;
     border: none;
 }
 
 .notewrapper:hover .dropbtn  {
     color: lightskyblue;
-    border-bottom: solid 4px lightskyblue;
+    border-bottom: solid 3px lightskyblue;
 }
 
 .dropdown:hover .dropbtn  {
     color: lightpink;
-    border-bottom: solid 4px lightpink;
+    border-bottom: solid 3px lightpink;
 }
 
 .dropdown {
@@ -164,5 +166,7 @@ body {
 }
 
 .menuwrapper {
-    width:420px;
+    overflow: auto;
+    margin: auto;
+    width: 248px;
 }

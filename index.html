@@ -6,16 +6,23 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500" rel="stylesheet">
 
     <h1 id= "mainheader"><div class="headerwrapper" >
-        <span style = "font-weight: 100; color:darkgray; padding-bottom: 5px">ON</span><span class = "outer" style = "padding-bottom: 5px;">L<span class="headercontainer" style = "padding-bottom: 5px;">INE WHITEBO</span>A</span>RD
+        <!--<span style = "font-weight: 100; color:#1a1a1a; background-color: #f4eee3;">ONLINE WHITEBOARD</span>-->
     </div></h1>
 </head>
 
 <body ondrop="drop(event)" ondragover="drag_over(event)" style = "overflow: hidden">
-    <div class = "buttonswrapper">
-    </div>
     <canvas id="maincanvas">
     </canvas>
     <div class = "menuwrapper">
+        <div class="dropdown" onmouseleave="hide('dropdown-content')">
+            <button class="dropbtn" id="drop" onmouseenter="showMenu('myDropdown')">SETTINGS</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
+
         <div class="notewrapper" onmouseleave="hide('notearea')">
             <button class="dropbtn" id="notedrop" onmouseenter="showMenu('noteblock')">TOOLS</button>
             <div class = "notearea" id="noteblock">
@@ -24,15 +31,6 @@
                     <textarea class="inputtextarea" name="body" maxlength=2000></textarea><br>
                     <input type="button" class="secondtype" onclick="addNote(frm1.title.value, frm1.body.value)" value="SUBMIT">
                 </form>
-            </div>
-        </div>
-
-        <div class="dropdown" onmouseleave="hide('dropdown-content')">
-            <button class="dropbtn" id="drop" onmouseenter="showMenu('myDropdown')">SETTINGS</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
             </div>
         </div>
     </div>
@@ -49,17 +47,10 @@
 
         window.onload = init();
 
-        function resizeCanvas() {
-            var height = document.getElementById("mainheader").offsetHeight;
-            canvas = document.getElementById('maincanvas');
-            canvas.style.marginTop = height+"px";
-        }
-
         function init() {
             var height = document.getElementById("mainheader").offsetHeight;
             canvas = document.getElementById('maincanvas');
-            canvas.style.marginTop = height+"px";
-            canvas.setAttribute("width", (screen.availWidth-100).toString());
+            canvas.setAttribute("width", (screen.availWidth).toString());
             canvas.setAttribute("height", (screen.availHeight-100).toString());
             ctx = canvas.getContext("2d");
 
@@ -181,7 +172,7 @@
         }
 
         function showMenu(id) {
-            document.getElementById(id).classList.toggle("show");
+            document.getElementById(id).classList.add("show");
         }
 
     </script>
