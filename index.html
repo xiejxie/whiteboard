@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:300" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300" rel="stylesheet">
 
     <h1 id= "mainheader"><div class="headerwrapper" >
         <!--<span style = "font-weight: 100; color:#1a1a1a; background-color: #f4eee3;">ONLINE WHITEBOARD</span>-->
@@ -14,17 +15,28 @@
     <canvas id="maincanvas">
     </canvas>
     <div class = "menuwrapper">
-        <div class="dropdown" onmouseleave="hide('dropdown-content')">
-            <button class="dropbtn" id="drop" onmouseenter="showMenu('myDropdown')">SETTINGS</button>
+        <div class="notewrapper" onmouseleave="hide('dropdown-content')">
+            <button class="dropbtn" id="drop" onmouseenter="showMenu('myDropdown')">COLOUR</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
+                <button class="colorbutton" onclick="changeColor('black')" style="background-color: black;"></button>
+                <button class="colorbutton" onclick="changeColor('red')" style="background-color: red;"></button>
+                <button class="colorbutton" onclick="changeColor('yellow')" style="background-color: yellow;"></button>
+            </div>
+        </div>
+
+        <div class="notewrapper">
+            <button class="dropbtn" onclick="erase()">ERASER</button>
+        </div>
+
+        <div class="notewrapper" onmouseleave="hide('dropdown-content')">
+            <button class="dropbtn" id="settings" onmouseenter="showMenu('dropper')">SIZE</button>
+            <div id="dropper" class="dropdown-content">
+                <p>Hello</p>
             </div>
         </div>
 
         <div class="notewrapper" onmouseleave="hide('notearea')">
-            <button class="dropbtn" id="notedrop" onmouseenter="showMenu('noteblock')">TOOLS</button>
+            <button class="dropbtn" id="notedrop" onmouseenter="showMenu('noteblock')">NOTES</button>
             <div class = "notearea" id="noteblock">
                 <form id="frm1">
                     <input class="inputtext" type="text" name="title" maxlength=2000><br>
@@ -33,6 +45,11 @@
                 </form>
             </div>
         </div>
+
+        <div class="notewrapper">
+            <button class="dropbtn">HIDE</button>
+        </div>
+
     </div>
     <script>
         var canvas, ctx, flag = false,
@@ -42,7 +59,7 @@
                 currY = 0,
                 dot_flag = false;
 
-        var x = "black",
+        var x = "yellow",
                 y = 2;
 
         window.onload = init();
@@ -82,14 +99,27 @@
                     canvas.style.cursor = "pointer";
                     currX = e.clientX-50;
                     currY = e.clientY-100;
+                    ctx.beginPath();
                     ctx.moveTo(prevX,prevY);
                     ctx.lineTo(currX, currY);
                     ctx.stroke();
-                    ctx.fillRect(currX, currY, 1, 1);
+                    ctx.closePath();
+                    /**ctx.fillRect(currX, currY, 1, 1);**/
                     prevX = currX;
                     prevY = currY;
                 }
             }
+        }
+
+        function changeColor(color) {
+            ctx.lineWidth = 2;
+            ctx = canvas.getContext("2d");
+            ctx.strokeStyle = color;
+        }
+
+        function erase() {
+            ctx.lineWidth = 50;
+            ctx.strokeStyle = 'white';
         }
 
         function hide(className) {

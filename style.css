@@ -1,17 +1,21 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300';
+
 .note{
+    top: 0;
+    left: 0;
     z-index: 3;
     position: absolute;
     margin: auto;
     width: 120px;
     height: 200px;
-    overflow-y: hidden;
+    overflow: hidden;
     word-wrap: break-word;
     resize: both;
 }
 
 body {
     width: auto;
-    background-color: #f4eee3;
+    background-color: #363636;
     padding: 0;
     margin-top: 10px;
     margin-left: 0;
@@ -24,21 +28,22 @@ body {
 }
 
 #maincanvas {
-    margin-top: 25px;
-    z-index:1;
+    margin-top: 0;
+    z-index:0;
     overflow: hidden;
+    left: 0;
+    top: 255px;
     position: absolute;
     background-color: white;
-    /*top: 0;*/
 }
 
 .notewrapper {
     z-index: 2;
     text-align: center;
     float: left;
-    width: 128px;
+    width: 138px;
     -webkit-user-select: none;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
 }
 
@@ -90,8 +95,8 @@ body {
     margin: auto;
     text-align: center;
     -webkit-user-select: none;
-    width: 900px;
-    height: 80px;
+    width: 1200px;
+    height: 185px;
     letter-spacing: 3px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 100;
@@ -124,26 +129,74 @@ body {
 }
 
 .dropbtn {
+    height: 50px;
+    -webkit-user-select: none;
     z-index: 2;
     position: relative;
     background-color: transparent;
     width: 100px;
     margin: 0 auto;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    letter-spacing: 2px;
-    color: #1a1a1a;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 100;
+    color: white;
     border: none;
+    letter-spacing: 3px;
+    font-size: smaller;
+    transition: all 0.3s;
 }
 
-.notewrapper:hover .dropbtn  {
-    color: lightskyblue;
-    border-bottom: solid 3px lightskyblue;
+.dropbtn span {
+    transition: all 0.3s;
 }
 
-.dropdown:hover .dropbtn  {
-    color: lightpink;
-    border-bottom: solid 3px lightpink;
+.dropbtn::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    z-index: 4;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    transform: scale(0.1, 1);
+}
+
+/*.dropbtn::after {*/
+    /*content: '';*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*z-index: 1;*/
+    /*transition: all 0.3s;*/
+    /*background-color: rgba(255,255,255,0.1);*/
+/*}*/
+
+/*.notewrapper:hover .dropbtn::after {*/
+    /*opacity: 0;*/
+    /*transform: scale(0.1, 1);*/
+/*}*/
+
+.notewrapper:hover .dropbtn::before {
+    opacity: 1;
+}
+
+.notewrapper:hover .dropbtn {
+    letter-spacing: 6px;
+}
+
+.notewrapper:hover .dropbtn::before{
+    transform: scale(1,1);
+}
+
+.notewrapper:hover .notearea {
+    display: block;
+    position: relative;
+    width: 200px;
 }
 
 .dropdown {
@@ -166,7 +219,41 @@ body {
 }
 
 .menuwrapper {
-    overflow: auto;
+    background-color: transparent;
+    height: auto;
+    overflow: hidden;
     margin: auto;
-    width: 248px;
+    width: 700px;
+}
+
+@keyframes colorbuttons {
+    from {width: 30px; height: 30px;}
+    to {width: 35px; height: 35px;}
+}
+
+.colorbutton{
+    border: none;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    display: block;
+    background-color: cornsilk;
+}
+
+.colorbutton::before {
+    display: none;
+    border-radius: 50%;
+    position: relative;
+    content: "";
+    display: block;
+    background-color: inherit;
+    width: 30px;
+    height: 100%;
+    left: -6px;
+}
+
+.colorbutton:hover {
+    animation: colorbuttons 0.2s 1 alternate ease-out forwards;
 }
